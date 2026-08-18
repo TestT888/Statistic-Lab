@@ -1,9 +1,23 @@
-#generise slucajne brojeve iz raznih raspodela
+"""
+distributions.py
+-----------------
+Generatori slucajnih uzoraka, izgradjeni iskljucivo preko `random`
+(koji daje uniformnu raspodelu) i `math` modula.
+
+Ideja: uniformna raspodela je "sirovina" - preko matematickih
+transformacija (Box-Muller, inverzna transformacija...) iz nje
+se prave sve ostale raspodele koje su potrebne.
+"""
 import random
 import math
 
+# Cuva "rezervni" broj iz Box-Muller transformacije izmedju poziva
+# normal() funkcije - formula racuna DVA broja odjednom, ovde
+# pamti drugi za sledeci poziv
 _spare_gaussian = None
 
+# Standardna normalna (Gausova) raspodela preko Box-Muller transformacije.
+# mu = prosek, sigma = standardna devijacija
 def normal(mu=0.0, sigma=1.0):
     global _spare_gaussian
     if _spare_gaussian is not None:
